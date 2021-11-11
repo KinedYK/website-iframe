@@ -1,0 +1,128 @@
+@theme-color: rgba(0,114,255,1);
+@theme-bold-color: rgba(57,114,255,1);
+@theme-wight-color: rgba(71,114,255,0.7);
+
+@link-color: #ff0000;
+
+.m-border-1 {
+  background: #FFFFFF;
+  border: 1px solid #CFD4DB;
+}
+
+.m-line {
+  &-1 {
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+  }
+  &-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.m-t-15 {
+  margin-top: 15px;
+}
+.m-b-15 {
+  margin-bottom: 15px;
+}
+
+.m-bt-15 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.is-theme-page {
+  border: none;
+  background: #f5f7f8;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #545759;
+  line-height: 14px;
+}
+
+.is-theme-current-page {
+  background: @theme-color;
+  color: #fff;
+  &:hover,
+  &:focus {
+    border-color: @theme-color;
+    box-shadow: none;
+    color: #fff;
+  }
+}
+
+.is-theme-button {
+  border-color: @theme-color;
+  color: @theme-color;
+
+  &:hover {
+    border-color: @theme-color;
+    background: @theme-color;
+    color: #fff;
+  }
+}
+
+.is-theme-button-hard {
+  // border-color: @theme-color;
+  border: none;
+  background: #f5f7f8;
+  color: @theme-color;
+  &:hover,
+  &:focus,
+  &:active {
+    border: none;
+    box-shadow: 0 0 0 0 rgb(72 95 199 / 25%) !important;
+  }
+}
+
+.is-theme-button-ac {
+  border-color: @theme-color;
+  background: @theme-color;
+  color: #fff;
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: @theme-color;
+    box-shadow: 0 0 0 0 rgb(72 95 199 / 25%) !important;
+    color: #fff;
+  }
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-center-row {
+  justify-content: center;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.rjfl {
+  display: flex;
+  justify-content: space-between;
+}
+.rjfl-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1d2127;
+  line-height: 20px;
+}
+
+.rjfl-more {
+  font-size: 16px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #545759;
+  line-height: 16px;
+  cursor: pointer;
+}
