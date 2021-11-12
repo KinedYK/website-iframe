@@ -3,7 +3,7 @@
     <div class="timedown">{{continueTime}}</div>
     <img src="@/assets/close@3x.png" alt="" @click="close">
     <a :href="data.url">
-      <el-image style="width: 100%; height: auto;" :src="data.img" fit="fill"/>
+      <el-image :style="{height: height, width: width}" :src="data.img" :fit="fit"/>
     </a>
   </div>
 </template>
@@ -15,8 +15,19 @@ const props = defineProps({
   data: {
     type: Object
   },
+  fit: {
+    type: String,
+    default: "cover"
+  },
+  height: {
+    type: String,
+    default: "100%"
+  },
+  width: {
+    type: String,
+    default: "100%"
+  }
 })
-
 
 const show = ref(false)
 const close = () => {
@@ -50,23 +61,22 @@ timerOpen()
 
 <style lang="less" scoped>
   .wrap {
-    position: fixed;
-    bottom: -10px;
-    left: 0;
-    right: 0;
-    z-index: 9999;
+    position: relative;
+    margin-bottom: -10px;
+    height: 100%;
     img {
       position: absolute;
-      top: 10px;
+      top: 0;
       right: 0;
       width: 20px;
       height: 20px;
       object-fit: cover;
       z-index: 1;
+      // background-color: #fff;
     }
     .timedown {
       position: absolute;
-      top: 30px;
+      top: 20px;
       right: 5px;
       color: #fff;
       font-size: 16px;

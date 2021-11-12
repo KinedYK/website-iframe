@@ -8,6 +8,7 @@ import RecomNews from '@/components/RecomNews.vue'
 import RecomSoft from '@/components/RecomSoft.vue'
 import CommonHeader from '@/components/CommonHeader.vue'
 import AdRow from "@/components/AdRow.vue";
+import AdTime from "@/components/AdTime.vue";
 import AdFoot from "@/components/AdFoot.vue";
 import CouponList from '@/components/CouponList.vue'
 import MbLikeList from '@/components/MbLikeList.vue'
@@ -46,16 +47,7 @@ const pros = () => {
   Promise.all([pro1, pro2, pro3, pro4]).then(ress => {
     console.log(ress, '请求完毕')
     loadStatus.value = true
-    showScreenAdFn();
   })
-}
-
-// 开屏广告
-const showScreenAdStatus = ref(false)
-const showScreenAdFn = () => {
-  setTimeout(() => {
-    showScreenAdStatus.value = true
-  }, 3000)
 }
 
 pros();
@@ -91,13 +83,11 @@ onUnmounted(() => {
     style="height: 100vh"
   ></div>
   <div v-else v-infinite-scroll="load">
-    <AdRow :data="first.a"/>
+    <!-- 顶部广告 -->
+    <AdRow :data="first.a" height="40px" fit="fill"/>
 
     <div style="position: relative;">
       <CommonHeader :data="second"/>
-      <div class="ad-d">
-        <AdRow :data="first.d"/>
-      </div>
     </div>
 
     <div class="main">
@@ -166,7 +156,7 @@ onUnmounted(() => {
 
     <!-- 底部广告 -->
     <div class="showCopyRight" style="z-index: 15;">
-      <AdRow :data="first.e"/>
+      <AdTime :data="first.e"/>
     </div>
     
 
@@ -178,18 +168,24 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <!-- 侧边广告 -->
+    <!-- 两边可放大模块 -->
+    <div class="ad-d ad-d--l" :style="{top: (-110 + (i * 210)) + 'px'}" v-for="i in 3" :key="i">
+      <AdRow :data="first.d[i]" fit="fill"/>
+    </div>
+    <div class="ad-d ad-d--r" :style="{top: (-110 + (i * 210)) + 'px'}" v-for="i in 2" :key="i">
+      <AdRow :data="first.d[i + 2]" fit="fill"/>
+    </div>
+
+    <!-- 两边的广告 -->
     <div class="ad-b ad-b--l">
-      <AdRow :data="first.b[0]"/>
+      <AdTime :data="first.b[0]" fit="contain"/>
     </div>
     <div class="ad-b ad-b--r">
-      <AdRow :data="first.b[1]"/>
+      <AdTime :data="first.b[1]" fit="contain"/>
     </div>
 
     <!-- 开屏广告 -->
-    <div v-if="showScreenAdStatus">
-      <AdFoot :data="first.f"/>
-    </div>
+    <AdFoot :data="first.f"/>
   </div>
   
 </template>
@@ -212,35 +208,37 @@ onUnmounted(() => {
     margin: 0;
   }
 }
-.ad-d {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 112px;
-  height: 98px;
-  object-fit: cover;
-}
-
-@media only screen
-  and (min-width: 1500px) {
-    .ad-b { 
-      width: 330px !important;
-      height: 330px !important;
-    }
-}
 
 .ad-b {
   position: fixed;
-  width: 100px;
-  height: 100px;
+  max-width: 200px;
+  // height: 100px;
   z-index: 999;
   &--l {
-   top: 300px;
-   left: 22px;
+   top: 100px;
+   left: 10px;
   }
   &--r {
-    bottom: 200px;
-    right: 22px;
+    top: 100px;
+    right: 10px;
+  }
+}
+
+.ad-d {
+  position: fixed;
+  max-width: 200px;
+  max-height: 200px;
+  z-index: 990;
+  &:hover {
+    transform: scale(1.1);
+  }
+  &--l {
+   top: 100px;
+   left: 10px;
+  }
+  &--r {
+    top: 100px;
+    right: 10px;
   }
 }
 

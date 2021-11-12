@@ -1,6 +1,6 @@
 <template>
   <div v-if="show" class="wrap">
-    <img src="@/assets/close@3x.png" alt="" @click="close">
+    <!-- <img src="@/assets/close@3x.png" alt="" @click="close"> -->
     <CarouselCard ref="carouselCardRef" 
       :interval="7000" 
       :autoplay="true" 

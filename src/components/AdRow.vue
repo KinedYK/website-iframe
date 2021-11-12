@@ -2,7 +2,7 @@
   <div v-if="show" class="wrap">
     <img src="@/assets/close@3x.png" alt="" @click="close">
     <a :href="data.url">
-      <el-image style="width: 100%; height:100px;" :src="data.img" fit="cover"/>
+      <el-image :style="{height: height, width: width}" :src="data.img" :fit="fit"/>
     </a>
   </div>
 </template>
@@ -13,6 +13,18 @@ import { ref } from 'vue'
 defineProps({
   data: {
     type: Object
+  },
+  fit: {
+    type: String,
+    default: "cover"
+  },
+  height: {
+    type: String,
+    default: "100%"
+  },
+  width: {
+    type: String,
+    default: "100%"
   }
 })
 
@@ -26,6 +38,7 @@ const close = () => {
   .wrap {
     position: relative;
     margin-bottom: -10px;
+    height: 100%;
     img {
       position: absolute;
       top: 0;
@@ -34,7 +47,7 @@ const close = () => {
       height: 20px;
       object-fit: cover;
       z-index: 1;
-      background-color: #fff;
+      // background-color: #fff;
     }
   }
 </style>
