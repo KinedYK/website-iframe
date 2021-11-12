@@ -3,7 +3,7 @@
     <div class="container">
       <div class="footer-left">
         <div class="copyright">{{ data.t.content }}</div>
-        <div class="copyright2" style="line-height: 3;">
+        <div class="copyright2">
           <template v-for="(it, i) in data.u" :key="i">
             <el-tooltip
               v-if="it.tap"
@@ -54,7 +54,7 @@ defineProps({
   font-weight: 400;
   color: #fff;
   line-height: 20px;
-  padding: 20px 0 0 0;
+  padding: 0;
   .container {
     display: flex;
     justify-content: flex-start;
