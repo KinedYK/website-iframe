@@ -49,6 +49,7 @@ defineProps({
 <style scoped lang="less">
 .footer {
   width: 100vw;
+  min-width: 1200px;
   background: #545759;
   font-size: 14px;
   font-weight: 400;

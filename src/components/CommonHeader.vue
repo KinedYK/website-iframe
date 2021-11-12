@@ -201,6 +201,7 @@ const searchText = ref(null)
 .nav-bar {
   display: flex;
   width: 100vw;
+  min-width: 1200px;
   height: 44px;
   border-top: 1px solid #EBEEF2;
   border-bottom: 1px solid #CFD4DB;

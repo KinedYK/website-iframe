@@ -36,6 +36,7 @@ onUnmounted(() => {
   font-family: PingFangSC-Regular, PingFang SC;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-width: 1200px;
   a {
     color: inherit;
     &:hover {
