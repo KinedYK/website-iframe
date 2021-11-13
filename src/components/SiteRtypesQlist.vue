@@ -19,7 +19,7 @@ const list = ref(["军事","军事","军事","军事","军事","军事事","军�
   <div class="site">
     <div class="site-title flex">
       <span v-for="(ir, i) in dataR" :key="i">
-        <a :href="ir.url" class="m-line-1">{{ir.name}}</a> 
+        <a :href="ir.url">{{ir.name}}</a> 
       </span>
     </div>
     <div class="site-content">
@@ -70,10 +70,6 @@ const list = ref(["军事","军事","军事","军事","军事","军事事","军�
           position: absolute;
           left: -14px;
           color: #626972;
-        }
-        a { 
-          width: 44px;
-          display: inline-block;
         }
       }
     }

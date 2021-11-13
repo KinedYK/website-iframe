@@ -169,11 +169,11 @@ onUnmounted(() => {
     </div>
 
     <!-- 两边可放大模块 -->
-    <div class="ad-d ad-d--l" :style="{top: ((i * 110)) + 'px'}" v-for="i in 3" :key="i">
-      <AdRow :data="first.d[i]" fit="fill"/>
+    <div class="ad-d ad-d--l" :style="{top: (100 + (i * 110)) + 'px'}" v-for="i in 3" :key="i">
+      <AdRow v-if="first.d.length > i" :data="first.d[i]" fit="fill"/>
     </div>
-    <div class="ad-d ad-d--r" :style="{top: ((i * 110)) + 'px'}" v-for="i in 2" :key="i">
-      <AdRow :data="first.d[i + 2]" fit="fill"/>
+    <div class="ad-d ad-d--r" :style="{top: (100 + (i * 110)) + 'px'}" v-for="i in 2" :key="i">
+      <AdRow v-if="first.d.length > i+2" :data="first.d[i + 2]" fit="fill"/>
     </div>
 
     <!-- 两边的广告 -->
