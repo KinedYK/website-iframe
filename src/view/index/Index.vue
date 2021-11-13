@@ -10,12 +10,14 @@ import CommonHeader from '@/components/CommonHeader.vue'
 import AdRow from "@/components/AdRow.vue";
 import AdTime from "@/components/AdTime.vue";
 import AdFoot from "@/components/AdFoot.vue";
+import AdVideo from '@/components/AdVideo.vue'
 import CouponList from '@/components/CouponList.vue'
 import MbLikeList from '@/components/MbLikeList.vue'
 import HotNewsItem from '@/components/HotNewsItem.vue'
 import CopyRight from '@/components/CopyRight.vue'
 import HotVideo from '@/components/HotVideo.vue'
 import CommonFooter from '@/components/CommonFooter.vue'
+import SiteNameList from '@/components/SiteNameList.vue'
 import {ref, computed, onMounted, onUnmounted} from 'vue'
 
 const first = ref(null);
@@ -63,7 +65,13 @@ const load = () => {
 // 备案信息
 const showCopyRight = ref(false)
 const handelScorll = (e) => {
+  getScrollTop()
   showCopyRight.value = document.documentElement.scrollTop > 3000
+}
+
+const scrollTop = ref(0)
+const getScrollTop = () => {
+  scrollTop.value = document.documentElement.scrollTop
 }
 
 onMounted(() => {
@@ -86,8 +94,12 @@ onUnmounted(() => {
     <!-- 顶部广告 -->
     <AdRow :data="first.a" height="40px" fit="fill"/>
 
-    <div style="position: relative;">
-      <CommonHeader :data="second"/>
+    <div style="position: relative; min-height: 191px; z-index: 999;">
+      <CommonHeader :class="{sticky: scrollTop > 40}" :data="second"/>
+    </div>
+
+    <div class="flex" style="margin: 7px 0;">
+      <SiteNameList :data="second.m"/>
     </div>
 
     <div class="main">
@@ -156,7 +168,7 @@ onUnmounted(() => {
 
     <!-- 底部广告 -->
     <div class="showCopyRight" style="z-index: 15;">
-      <AdTime :data="first.e"/>
+      <AdTime :data="first.e" :isBlur="true"/>
     </div>
     
 
@@ -184,7 +196,15 @@ onUnmounted(() => {
       <AdTime :data="first.b[1]" fit="contain"/>
     </div>
 
-    <!-- 开屏广告 -->
+    <!-- 视频广告W -->
+    <div v-if="first.w.type == 1" class="ad-w">
+      <AdTime :data="first.w" fit="contain"/>
+    </div>
+    <div v-else class="ad-w">
+      <AdVideo :data="first.w"/>
+    </div>
+
+    <!-- 开屏广告F -->
     <AdFoot :data="first.f"/>
   </div>
   
@@ -209,11 +229,19 @@ onUnmounted(() => {
   }
 }
 
+.sticky {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  background-color: #fff;
+}
+
 .ad-b {
   position: fixed;
   max-width: 200px;
-  // height: 100px;
-  z-index: 999;
+  z-index: 1001;
   &--l {
    top: 100px;
    left: 10px;
@@ -228,7 +256,7 @@ onUnmounted(() => {
   position: fixed;
   max-width: 100px;
   max-height: 100px;
-  z-index: 990;
+  z-index: 1000;
   &:hover {
     transform: scale(1.1);
   }
@@ -240,6 +268,15 @@ onUnmounted(() => {
     top: 100px;
     right: 10px;
   }
+}
+
+.ad-w {
+  position: fixed;
+  max-width: 200px;
+  max-height: 200px;
+  z-index: 989;
+  bottom: 58px;
+  right: 0px;
 }
 
 .infinite-list {

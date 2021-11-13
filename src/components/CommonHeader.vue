@@ -1,9 +1,8 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import SiteNameList from './SiteNameList.vue'
-
 import { gotoSearch } from "../utils/action";
+import WeatherCard from './WeatherCard.vue'
 
 const router = useRouter()
 
@@ -29,38 +28,51 @@ const selectSearch = (it) => {
 
 // text
 const searchText = ref(null)
+
+// 天气
+const head = ref(null)
+axios.get('/api/base/head').then(res => {
+  head.value = res.data.data
+  console.log(head.value)
+})
+
+const showWeekWeather = ref(false)
 </script>
 
 <template>
   <div class="basic-top">
-    <div class="abso-tr">
-      
-    </div>
+    <!-- <div class="abso-tr"></div> -->
     <div class="container">
-      <div class="topbar-bd flex">
+      <div class="topbar-bd flex" v-if="head">
         <img class="logo" :src="data.g.img"/>
-        <span>静安</span>
+        <span>{{head.area}}</span>
         <span class="splitter">|</span>
         <a class="weather-detail flex" href="http://">
-          <img style="padding-right: 5px;" src="@/assets/sun@3x.png" alt="">
+          <img style="padding-right: 5px;" :src="head.weather[0].img" alt="">
           <span style="padding-right: 5px;">今</span>
-          <span style="padding-right: 5px;">阴</span>
-          <span>12~20度</span>
+          <span style="padding-right: 5px;">{{head.weather[0].weather}}</span>
+          <span>{{head.weather[0].temp}}</span>
         </a>
         <span class="splitter">|</span>
         <a class="weather-detail flex" href="http://">
-          <img style="padding-right: 5px;" src="@/assets/sun@3x.png" alt="">
+          <img style="padding-right: 5px;" :src="head.weather[1].img" alt="">
           <span style="padding-right: 5px;">明</span>
-          <span style="padding-right: 5px;">阴</span>
-          <span style="padding-right: 10px;">12~20度</span>
+          <span style="padding-right: 5px;">{{head.weather[1].weather}}</span>
+          <span style="padding-right: 10px;">{{head.weather[1].temp}}</span>
         </a>
-        <a href="" class="flex">
-          <span style="padding-right: 5px">查看本周天气</span>
-          <span>></span>
-        </a>
+        <div class="flex" @mouseenter="showWeekWeather = true" @mouseleave="showWeekWeather = false">
+          <span style="padding-right: 5px; cursor: pointer;">查看本周天气 > </span>
+          <div class="wrap-weather" v-show="showWeekWeather">
+            <WeatherCard :data="head.weather"/>
+          </div>
+        </div>
         <div class="date">
-          <span style="padding-right: 16px">11月22日周二</span>
-          <span>九月甘八</span>
+          <span style="padding-right: 16px">{{head.calendar.date}}</span>
+          <span>{{head.calendar.lunar}}</span>
+          <span class="splitter">|</span>
+          <span class="suit">宜：{{head.calendar.suit}}</span>
+          <span class="splitter">|</span>
+          <span class="avoid">忌：{{head.calendar.avoid}}</span>
         </div>
       </div>
       <!-- 搜索 -->
@@ -149,14 +161,12 @@ const searchText = ref(null)
       </div>
     </div>
   </div>
-  <div class="flex" style="margin: 7px 0;">
-    <SiteNameList :data="data.m"/>
-  </div>
 </template>
 
 <style lang="less" scoped>
 .basic-top {
   background: #fff;
+  position: sticky;
   a {
     line-height: 1;
   }
@@ -177,6 +187,11 @@ const searchText = ref(null)
     width: 50px;
     height: 13px;
     object-fit: cover;
+  }
+  .wrap-weather {
+    position: absolute;
+    top: 30px; left: 200px;
+    z-index: 999;
   }
   .weather-detail {
     img { 

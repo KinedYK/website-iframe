@@ -1,15 +1,17 @@
 <template>
-  <div v-if="show" class="wrap" :class="{'bg-blur': isBlur}">
+  <div v-if="show" class="wrap">
     <div class="timedown">{{continueTime}}</div>
     <img src="@/assets/close@3x.png" alt="" @click="close">
     <a :href="data.url">
-      <el-image :style="{height: height, width: width}" :src="data.img" :fit="fit"/>
+      <video controls autoplay loop muted="false" width="200" :src="data.img">
+        Sorry, your browser doesn't support embedded videos.
+      </video>
     </a>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
   data: {
@@ -26,10 +28,6 @@ const props = defineProps({
   width: {
     type: String,
     default: "100%"
-  },
-  isBlur: {
-    type: Boolean,
-    default: false
   }
 })
 
@@ -64,16 +62,13 @@ timerOpen()
 </script>
 
 <style lang="less" scoped>
-  .bg-blur {
-    backdrop-filter: blur(1px);
-  }
   .wrap {
     position: relative;
     margin-bottom: -10px;
     height: 100%;
     img {
       position: absolute;
-      top: 0;
+      top: 0px;
       right: 0;
       width: 20px;
       height: 20px;
