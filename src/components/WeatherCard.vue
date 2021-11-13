@@ -24,7 +24,7 @@ defineProps({
   background: linear-gradient(rgb(47, 50, 92), rgb(30, 47, 139));
   border-radius: 8px;
   .item {
-    width: 100px;
+    min-width: 100px;
     color: #fff;
     text-align: center;
     font-family: PingFangSC-Regular;
