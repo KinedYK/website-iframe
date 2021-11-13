@@ -21,10 +21,11 @@ defineProps({
 .weather {
   min-width: 300px;
   min-height: 150px;
-  background: linear-gradient(rgb(47, 50, 92), rgb(30, 47, 139));
+  background: linear-gradient(rgba(47, 50, 92, .9), rgba(30, 47, 139, .9));
   border-radius: 8px;
+  backdrop-filter: blur(4px);
   .item {
-    min-width: 100px;
+    min-width: 140px;
     color: #fff;
     text-align: center;
     font-family: PingFangSC-Regular;
