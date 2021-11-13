@@ -9,12 +9,12 @@ defineProps({
 <template>
   <div class="site-item flex">
     <img class="icon" :src="data.icon" alt="">
-    <a class="m-line-1" :href="data.url">{{data.name}}</a>
-    <a v-if="data.img" class="img-ad" :href="data.tipUrl">
+    <a class="m-line-1" @click="gotoHref(data.url)">{{data.name}}</a>
+    <a v-if="data.img" class="img-ad" @click="gotoHref(data.tipUrl)">
       <img :src="data.img" alt="">
     </a>
     <div v-if="data.tip" class="text-ad">
-      <a :href="data.tipUrl">{{data.tip}}</a> 
+      <a @click="gotoHref(data.tipUrl)">{{data.tip}}</a> 
     </div>
   </div>
 </template>

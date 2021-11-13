@@ -14,7 +14,7 @@ defineProps({
 <template>
   <div class="site-name">
     <span v-for="(it, i) in data" :key="i">
-      <a :href="it.url">{{it.name}}</a>
+      <a @click="gotoHref(it.url)">{{it.name}}</a>
     </span>
   </div>
 </template>

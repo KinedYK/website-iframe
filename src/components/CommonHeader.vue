@@ -78,7 +78,7 @@ const showWeekWeather = ref(false)
       <!-- 搜索 -->
       <div class="logo-search">
         <div class="logo" style="margin-right: 8px;">
-          <a :href="currSearchItem.url">
+          <a @click="gotoHref(currSearchItem.url)">
             <img :src="currSearchItem.logo" />
           </a>
         </div>
@@ -122,7 +122,7 @@ const showWeekWeather = ref(false)
                     :src="it.icon" 
                     alt="">
                     <span>
-                      <a :href="it.url">{{ it.name }}</a>
+                      <a @click="gotoHref(it.url)">{{ it.name }}</a>
                     </span>
                 </li>
               </ul>
@@ -134,7 +134,7 @@ const showWeekWeather = ref(false)
                   <li class="demonstration flex" v-for="(it, i) in data.j" :key="i">
                     <img class="icon" :src="it.icon" alt="">
                     <span class="m-line-1">
-                      <a :href="it.url">{{ it.name }}</a>
+                      <a @click="gotoHref(it.url)">{{ it.name }}</a>
                     </span>
                   </li>
                 </ul>
@@ -155,7 +155,7 @@ const showWeekWeather = ref(false)
         >
           <img :src="it.icon" alt="" v-if="i%4 == 0">
           <span>
-            <a :href="it.url">{{ it.name }}</a>
+            <a @click="gotoHref(it.url)">{{ it.name }}</a>
           </span>
         </div>
       </div>

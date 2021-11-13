@@ -2,7 +2,7 @@
   <div v-if="show" class="wrap">
     <div class="timedown">{{continueTime}}</div>
     <img src="@/assets/close@3x.png" alt="" @click="close">
-    <a :href="data.url">
+    <a @click="gotoHref(data.url)">
       <video controls autoplay loop muted="false" width="200" :src="data.img">
         Sorry, your browser doesn't support embedded videos.
       </video>

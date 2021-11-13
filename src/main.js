@@ -16,7 +16,13 @@ window.axios = axios;
 window.encode = encode;
 window.encodeUtf8 = encodeUtf8;
 
-createApp(App)
+import {gotoHref} from './utils/action.js'
+
+const app = createApp(App);
+
+app.config.globalProperties.gotoHref = gotoHref
+
+app
   .directive('resize', {
     bind: function(el, { value = {} }) {
       el.addEventListener('load', () => iframeResize(value, el))

@@ -21,7 +21,7 @@ defineProps({
 .weather {
   min-width: 300px;
   min-height: 150px;
-  background: linear-gradient(rgba(47, 50, 92, .9), rgba(30, 47, 139, .9));
+  background: linear-gradient(rgba(26,46,76,.8),rgba(55,100,140,.8));
   border-radius: 8px;
   backdrop-filter: blur(4px);
   .item {

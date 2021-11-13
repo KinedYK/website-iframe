@@ -33,14 +33,14 @@ const data = ref([
     <div class="site-content">
       <div class="flex" v-for="(iq, i) in data" :key="i">
         <span style="color: #5D96EA; width: 40px;">
-          <a :href="iq.url">{{iq.name}}</a>
+          <a @click="gotoHref(iq.url)">{{iq.name}}</a>
         </span>
         <el-row style="flex-grow: 1;">
           <el-col class="flex" style="height: 40px;" :span="3" v-for="(it, i) in iq.details" :key="i">
             <span><a href="">{{it}}</a></span>
           </el-col>
         </el-row>
-        <span style="color: #B9BDC3; padding: 0 20px;"><a :href="iq.url">换一换</a></span>
+        <span style="color: #B9BDC3; padding: 0 20px;"><a @click="gotoHref(iq.url)">换一换</a></span>
       </div>
     </div>
   </div>

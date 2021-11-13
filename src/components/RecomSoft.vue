@@ -32,7 +32,7 @@ const changeTab = (index) => {
       <el-col style="padding-left: 10px;" :span="12" v-for="(it, jndex) in data[activeIndex].details" :key="jndex" class="m-line-1 item">
         <img class="icon" :src="it.icon" alt="">
         <span>
-          <a :href="it.url">{{it.name}}</a>
+          <a @click="gotoHref(it.url)">{{it.name}}</a>
         </span>
       </el-col>
     </el-row>

@@ -12,7 +12,7 @@ defineProps({
     <el-scrollbar>
       <div class="flex-content">
         <p v-for="(item, i) in data" :key="i" class="scrollbar-demo-item">
-          <a :href="item.url">
+          <a @click="gotoHref(item.url)">
             <img :src="item.img" alt="">
           </a>
         </p>

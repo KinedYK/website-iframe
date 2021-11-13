@@ -2,7 +2,7 @@
   <div v-if="show" class="wrap">
     <div class="timedown">{{continueTime}}</div>
     <img src="@/assets/close@3x.png" alt="" @click="close">
-    <a :href="data.url">
+    <a @click="gotoHref(data.url)">
       <el-image style="width: 100%; height: auto;" :src="data.img" fit="fill"/>
     </a>
   </div>

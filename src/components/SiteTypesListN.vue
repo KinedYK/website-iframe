@@ -18,14 +18,14 @@ const list = computed(() => props.data[0].details.slice(0, 15))
     <el-row>
       <el-col class="flex flex-center-row" v-for="i in Math.ceil(list.length/2)" :key="i" :span="12">
         <span class="text text-l">
-          <a :href="list[(i-1)*2].url">
+          <a @click="gotoHref(list[(i-1)*2].url)">
             {{list[(i-1)*2].name}}
           </a>
         </span>
         <span class="split">|</span>
         <span class="text text-r">
-          <a v-if="2*i-1 < list.length" :href="list[(i-1)*2].url">{{list[2*i-1].name}}</a>
-          <a v-else :href="data[0].url" style="color: #5D96EA;">更多</a>
+          <a v-if="2*i-1 < list.length" @click="gotoHref(list[(i-1)*2].url)">{{list[2*i-1].name}}</a>
+          <a v-else @click="gotoHref(data[0].url)" style="color: #5D96EA;">更多</a>
         </span>
       </el-col>
     </el-row>

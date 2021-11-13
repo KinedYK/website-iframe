@@ -12,17 +12,17 @@
               placement="top-start"
             >
               <template #content>
-                <a :href="it.tipUrl">{{it.tip}}</a>
+                <a @click="gotoHref(it.tipUrl)">{{it.tip}}</a>
               </template>
-              <a :href="it.url">{{ it.name }}</a>
+              <a @click="gotoHref(it.url)">{{ it.name }}</a>
             </el-tooltip>
             <span v-else>
-              <a :href="it.url">{{it.name }}</a>
+              <a @click="gotoHref(it.url)">{{it.name }}</a>
             </span>
           </template>
           <template v-for="(it, i) in data.v" :key="i">
             <span v-if="it.url">
-              <a :href="it.url">
+              <a @click="gotoHref(it.url)">
                 {{it.name}}：{{it.content}}
               </a>
             </span>
