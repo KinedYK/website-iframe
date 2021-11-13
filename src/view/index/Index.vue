@@ -81,6 +81,15 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener("scroll", handelScorll);
 });
+
+// 屏幕宽度
+const viewWidth = ref(0)
+viewWidth.value = document.documentElement.clientWidth
+console.log(viewWidth.value, 'viewWidth')
+const adOffsetD = ref(0)
+adOffsetD.value = viewWidth.value/2 - 700 > 0 ? viewWidth.value/2 - 700 : 10
+const adOffsetB = ref(0)
+adOffsetB.value = viewWidth.value/2 - 800 > 0 ? viewWidth.value/2 - 800 : 10
 </script>
 
 <template>
@@ -167,7 +176,7 @@ onUnmounted(() => {
     </div>
 
     <!-- 底部广告 -->
-    <div class="showCopyRight" style="z-index: 15;">
+    <div class="showCopyRight" style="z-index: 1001;">
       <AdTime :data="first.e" :isBlur="true"/>
     </div>
     
@@ -181,18 +190,18 @@ onUnmounted(() => {
     </div>
 
     <!-- 两边可放大模块 -->
-    <div class="ad-d ad-d--l" :style="{top: ((i * 200)) + 'px'}" v-for="i in 3" :key="i">
+    <div class="ad-d ad-d--l" :style="{top: ((i * 200)) + 'px', left: adOffsetD + 'px'}" v-for="i in 3" :key="i">
       <AdRow v-if="first.d.length > i" :data="first.d[i]" fit="fill"/>
     </div>
-    <div class="ad-d ad-d--r" :style="{top: ((i * 200)) + 'px'}" v-for="i in 2" :key="i">
+    <div class="ad-d ad-d--r" :style="{top: ((i * 200)) + 'px', right: adOffsetD + 'px'}" v-for="i in 2" :key="i">
       <AdRow v-if="first.d.length > i+2" :data="first.d[i + 2]" fit="fill"/>
     </div>
 
-    <!-- 两边的广告 -->
-    <div class="ad-b ad-b--l">
+    <!-- 两边的广告B -->
+    <div class="ad-b ad-b--l" :style="{left: adOffsetB + 'px'}">
       <AdTime :data="first.b[0]" fit="contain"/>
     </div>
-    <div class="ad-b ad-b--r">
+    <div class="ad-b ad-b--r" :style="{right: adOffsetB + 'px'}">
       <AdTime :data="first.b[1]" fit="contain"/>
     </div>
 
@@ -275,7 +284,7 @@ onUnmounted(() => {
   max-width: 200px;
   max-height: 200px;
   z-index: 989;
-  bottom: 58px;
+  bottom: 0;
   right: 0px;
 }
 

@@ -4,6 +4,7 @@
       <div class="footer-left">
         <div class="copyright">{{ data.t.content }}</div>
         <div class="copyright2">
+          <!-- 关于本站 -->
           <template v-for="(it, i) in data.u" :key="i">
             <el-tooltip
               v-if="it.tap"
@@ -12,14 +13,15 @@
               placement="top-start"
             >
               <template #content>
-                <a @click="gotoHref(it.tipUrl)">{{it.tip}}</a>
+                <span @click="gotoHref(it.tipUrl)">{{it.tip}}</span>
               </template>
-              <a @click="gotoHref(it.url)">{{ it.name }}</a>
+              <span @click="gotoHref(it.url)">{{ it.name }}</span>
             </el-tooltip>
-            <span v-else>
-              <a @click="gotoHref(it.url)">{{it.name }}</a>
+            <span v-else @click="gotoHref(it.url)">
+              {{it.name }}
             </span>
           </template>
+          <!-- 备案 -->
           <template v-for="(it, i) in data.v" :key="i">
             <span v-if="it.url">
               <a @click="gotoHref(it.url)">
@@ -56,6 +58,9 @@ defineProps({
   color: #fff;
   line-height: 20px;
   padding: 0;
+  &:hover {
+    background: #545759da;
+  }
   .container {
     display: flex;
     justify-content: flex-start;
@@ -101,6 +106,14 @@ defineProps({
       span::after {
         content: "";
         margin: 0 5px;
+      }
+    }
+    .copyright2 {
+      span {
+        cursor: pointer;
+      }
+      span:hover {
+        color: rgba(245, 247, 248, 0.7) !important;
       }
     }
   }
