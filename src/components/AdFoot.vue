@@ -1,10 +1,12 @@
 <template>
-  <div v-if="show" class="wrap">
-    <div class="timedown">{{continueTime}}</div>
-    <img src="@/assets/close@3x.png" alt="" @click="close">
-    <a @click="gotoHref(data.url)">
-      <el-image style="width: 100%; height: auto;" :src="data.img" fit="fill"/>
-    </a>
+  <div v-if="show" class="adfoot">
+    <div class="wrap">
+      <div class="timedown">{{continueTime}}</div>
+      <img src="@/assets/close@3x.png" alt="" @click="close">
+      <a @click="gotoHref(data.url)">
+        <el-image style="width: 100%; height: auto;" :src="data.img" fit="contain"/>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -49,29 +51,39 @@ timerOpen()
 </script>
 
 <style lang="less" scoped>
-  .wrap {
+  .adfoot {
     position: fixed;
-    bottom: -10px;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
     left: 0;
-    right: 0;
     z-index: 9999;
-    img {
-      position: absolute;
-      top: 10px;
-      right: 0;
-      width: 20px;
-      height: 20px;
-      object-fit: cover;
-      z-index: 1;
-    }
-    .timedown {
-      position: absolute;
-      top: 30px;
-      right: 5px;
-      color: #fff;
-      font-size: 16px;
-      object-fit: cover;
-      z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .wrap {
+      position: relative;
+      width: 50%;
+      height: 50%;
+      img {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 20px;
+        height: 20px;
+        object-fit: cover;
+        z-index: 1;
+      }
+      .timedown {
+        position: absolute;
+        top: 20px;
+        right: 5px;
+        color: #fff;
+        font-size: 16px;
+        object-fit: cover;
+        z-index: 1;
+      }
     }
   }
+  
 </style>

@@ -45,17 +45,19 @@ const showWeekWeather = ref(false)
     <div class="container">
       <div class="topbar-bd flex" v-if="head">
         <img class="logo" :src="data.g.img"/>
-        <span>{{head.area}}</span>
+        <span>
+          <a @click="gotoHref(head.area.url)">{{head.area.name}}</a>
+        </span>
         <span class="splitter">|</span>
-        <a class="weather-detail flex" href="http://">
-          <img style="padding-right: 5px;" :src="head.weather[0].img" alt="">
+        <a class="weather-detail flex" @click="gotoHref(head.weather[0].url)">
+          <img style="margin-right: 5px;" :src="head.weather[0].img" alt="">
           <span style="padding-right: 5px;">今</span>
           <span style="padding-right: 5px;">{{head.weather[0].weather}}</span>
           <span>{{head.weather[0].temp}}</span>
         </a>
         <span class="splitter">|</span>
-        <a class="weather-detail flex" href="http://">
-          <img style="padding-right: 5px;" :src="head.weather[1].img" alt="">
+        <a class="weather-detail flex" @click="gotoHref(head.weather[1].url)">
+          <img style="margin-right: 5px;" :src="head.weather[1].img" alt="">
           <span style="padding-right: 5px;">明</span>
           <span style="padding-right: 5px;">{{head.weather[1].weather}}</span>
           <span style="padding-right: 10px;">{{head.weather[1].temp}}</span>

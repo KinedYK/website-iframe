@@ -25,11 +25,12 @@ defineProps({
   border-radius: 8px;
   backdrop-filter: blur(4px);
   .item {
-    min-width: 140px;
+    width: 140px;
     color: #fff;
     text-align: center;
     font-family: PingFangSC-Regular;
     font-size: 10px;
+    padding: 0 10px;
     img {
       width: 40px;
       height: 40px;
