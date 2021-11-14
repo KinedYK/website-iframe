@@ -317,7 +317,7 @@ adOffsetB.value = viewWidth.value/2 - 800 > 0 ? viewWidth.value/2 - 800 : 10
   z-index: 12;
 }
 .copy-block {
-  height: 135px;
+  height: 55px;
   width: 100%;
 }
 </style>

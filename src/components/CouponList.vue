@@ -1,7 +1,69 @@
 <script setup>
+import {ref, onMounted} from 'vue'
 defineProps({
   data: Array,
 })
+ 
+const scrollbar = ref(null)
+onMounted(() => {
+  // 在渲染完成后, 这个 div DOM 会被赋值给 root ref 对象
+  console.log(scrollbar.value.$el, 'onMounted') // <div/>
+  autoScroll()
+})
+
+// 滚动条当前位置
+let currScrollLeft = 0
+const scrollWidth = ({ scrollLeft }) =>{
+  // console.log(scrollLeft, 'scrollLeft')
+  currScrollLeft = scrollLeft
+}
+
+// 向右自动滚动
+const scrollStep = 1
+const scrollStepTime = 20
+let autoScrollTimer = null
+let startAutoScrollLeft = 0
+let isPuse = false
+const autoScroll = () => {
+  if (isPuse) return
+  // 滚动到底部了
+  if (startAutoScrollLeft > currScrollLeft + scrollStep * 5) {
+    initAutoScroll()
+  }
+  autoScrollTimer = setTimeout(() => {
+    startAutoScrollLeft += scrollStep
+    scrollbar.value.setScrollLeft(startAutoScrollLeft)
+    autoScroll()
+  }, scrollStepTime)
+}
+
+// 重置自动滚动
+let initTimer = null
+const initAutoScroll = () => {
+  isPuse = true
+  if (initTimer) clearTimeout(initTimer)
+  initTimer = setTimeout(() => {
+    isPuse = false
+    // 重置自动滚动的起点
+    startAutoScrollLeft = 0
+    autoScroll()
+  }, 1000)
+}
+
+// 手动滚动
+let wheelTimer = null
+const mousewheelFunc = () => {
+  isPuse = true
+  if (wheelTimer) clearTimeout(wheelTimer)
+  if (autoScrollTimer) clearTimeout(autoScrollTimer)
+  wheelTimer = setTimeout(() => {
+    isPuse = false
+    // 重置自动滚动的起点
+    startAutoScrollLeft = currScrollLeft
+    console.log(currScrollLeft, 'currScrollLeft')
+    autoScroll()
+  }, 3000)
+}
 </script>
 
 <template>
@@ -9,7 +71,7 @@ defineProps({
     <div class="coupon-tip">
       <span>今日抢券</span>  
     </div>
-    <el-scrollbar>
+    <el-scrollbar ref="scrollbar" @scroll="scrollWidth" @mousewheel="mousewheelFunc">
       <div class="flex-content">
         <p v-for="(item, i) in data" :key="i" class="scrollbar-demo-item">
           <a @click="gotoHref(item.url)">
