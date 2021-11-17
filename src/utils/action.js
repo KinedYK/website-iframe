@@ -2,7 +2,7 @@
  * 跳转软件详情页
  * @param {软件详情} id
  */
-export const gotoDetail = (id, router) => {
+ export const gotoDetail = (id, router) => {
   console.log(process.env.NODE_ENV)
   if (process.env.NODE_ENV === "production") {
     const { href } = router.resolve({
@@ -33,9 +33,9 @@ export const gotoHref = (href) => {
 /**
  * 跳转搜索
  */
- export const gotoSearch = (text, url) => {
-  console.log(text, url)
-  const href  = `${url}?q=${text}`
+ export const gotoSearch = (text, url, ) => {
+  console.log(encodeURIComponent(text), text, url)
+  const href  = url.replace(/([&|?]{1}.+=)key/,`$1${encodeURIComponent(text)}`)
   updataHref(href)
   window.open(href, "_blank");
 };

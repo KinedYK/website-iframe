@@ -21,7 +21,7 @@ const changeVisiStatus = () => {
 }
 
 // 搜索方式
-const currSearchItem =  computed(() => props.data.h[0]) 
+const currSearchItem =  ref(props.data.h[0])
 const selectSearch = (it) => { 
   currSearchItem.value = it
 }
@@ -80,7 +80,7 @@ const showWeekWeather = ref(false)
       <!-- 搜索 -->
       <div class="logo-search">
         <div class="logo" style="margin-right: 8px;">
-          <a @click="gotoHref(currSearchItem.url)">
+          <a @click="gotoHref(currSearchItem.logoUrl)">
             <img :src="currSearchItem.logo" />
           </a>
         </div>
@@ -124,7 +124,7 @@ const showWeekWeather = ref(false)
                     :src="it.icon" 
                     alt="">
                     <span>
-                      <a @click="gotoHref(it.url)">{{ it.name }}</a>
+                      <a @click="gotoSearch(it.name.slice(0,currSearchItem.number), currSearchItem.url)">{{ it.name }}</a>
                     </span>
                 </li>
               </ul>
@@ -136,7 +136,7 @@ const showWeekWeather = ref(false)
                   <li class="demonstration flex" v-for="(it, i) in data.j" :key="i">
                     <img class="icon" :src="it.icon" alt="">
                     <span class="m-line-1">
-                      <a @click="gotoHref(it.url)">{{ it.name }}</a>
+                      <a @click="gotoSearch(it.name.slice(0,currSearchItem.number), currSearchItem.url)">{{ it.name }}</a>
                     </span>
                   </li>
                 </ul>

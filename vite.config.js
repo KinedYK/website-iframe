@@ -20,7 +20,7 @@ export default defineConfig({
     host: "0.0.0.0",
     proxy: {
       "/api": {
-        target: "http://8.131.88.218:8082/navigation/",
+        target: "http://8.131.88.218:8080/navigation/",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
