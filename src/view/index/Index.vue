@@ -21,25 +21,25 @@ import SiteNameList from '@/components/SiteNameList.vue'
 import {ref, computed, onMounted, onUnmounted} from 'vue'
 
 const first = ref(null);
-const pro1 = axios.get("/api/augment/first").then((res) => {
+const pro1 = axios.get("/navigation/augment/first").then((res) => {
   first.value = res.data.data;
   return res
 });
 
 const second = ref(null);
-const pro2 = axios.get("/api/augment/second").then((res) => {
+const pro2 = axios.get("/navigation/augment/second").then((res) => {
   second.value = res.data.data;
   return res
 });
 
 const third = ref(null);
-const pro3 = axios.get("/api/augment/third").then((res) => {
+const pro3 = axios.get("/navigation/augment/third").then((res) => {
   third.value = res.data.data;
   return res
 });
 
 const fourth = ref(null);
-const pro4 = axios.get("/api/augment/fourth").then((res) => {
+const pro4 = axios.get("/navigation/augment/fourth").then((res) => {
   fourth.value = res.data.data;
   return res
 });

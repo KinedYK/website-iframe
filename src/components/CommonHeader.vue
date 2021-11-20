@@ -31,7 +31,7 @@ const searchText = ref(null)
 
 // 天气
 const head = ref(null)
-axios.get('/api/base/head').then(res => {
+axios.get('/navigation/base/head').then(res => {
   head.value = res.data.data
   console.log(head.value)
 })

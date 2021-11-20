@@ -45,7 +45,7 @@ export const gotoHref = (href) => {
  */
  export const updataHref = (href) => {
   const encodedData = window.encode(window.encodeUtf8(href));
-  window.axios.get(`/api/base/visit/${encodedData}.html`).then((res) => {
+  window.axios.get(`/navigation/base/visit/${encodedData}.html`).then((res) => {
     console.log(href)
   });
 }
