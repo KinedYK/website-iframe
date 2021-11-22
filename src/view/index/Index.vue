@@ -18,6 +18,7 @@ import CopyRight from '@/components/CopyRight.vue'
 import HotVideo from '@/components/HotVideo.vue'
 import CommonFooter from '@/components/CommonFooter.vue'
 import SiteNameList from '@/components/SiteNameList.vue'
+import Hot3NewsItem from '@/components/Hot3NewsItem.vue'
 import {ref, computed, onMounted, onUnmounted} from 'vue'
 
 const first = ref(null);
@@ -54,21 +55,62 @@ const pros = () => {
 
 pros();
 
-// 无限滚动
-const count = ref(10)
-const load = () => {
-  if (count.value < 50) {
-    count.value += 10
-  }
-}
+// 屏幕宽高
+let viewWidth = 0
+let viewHeight = 0
+viewWidth = document.documentElement.clientWidth
+console.log(viewWidth, 'viewWidth')
+viewHeight = document.documentElement.clientHeight
+console.log(viewHeight, 'viewHeight')
+const adOffsetD = ref(0)
+adOffsetD.value = viewWidth/2 - 700 > 0 ? viewWidth/2 - 700 : 10
+const adOffsetB = ref(0)
+adOffsetB.value = viewWidth/2 - 800 > 0 ? viewWidth/2 - 800 : 10
 
 // 备案信息
 const showCopyRight = ref(false)
 const handelScorll = (e) => {
+  // console.log(e.srcElement.scrollingElement.scrollTop, e.srcElement.scrollingElement.scrollHeight)
   getScrollTop()
+  // 是否显示备案信息
   showCopyRight.value = document.documentElement.scrollTop > 3000
+  // 是否触底
+  if(e.srcElement.scrollingElement.scrollHeight <= e.srcElement.scrollingElement.scrollTop + viewHeight) {
+    console.log('触底啦')
+    load()
+  }
+  
 }
 
+// 无限滚动
+const count = ref(10)
+const loadPageStatus = ref('more') // more nomore loading
+const load = () => {
+  loadPageStatus.value = 'loading'
+  if (count.value < 50) {
+    setTimeout(() => {
+      count.value += 10
+      loadPageStatus.value = 'more'
+    }, 1000)
+  } else {
+    loadPageStatus.value = 'nomore'
+  }
+}
+
+const loadTip = computed(() => {
+  switch (loadPageStatus.value) {
+    case 'loading':
+      return '正在加载...';
+    case 'nomore':
+      return '我们也是有底线的~~';
+    case 'more':
+      return '更多';
+    default: 
+      return '更多';
+  }
+})
+
+// 吸顶
 const scrollTop = ref(0)
 const getScrollTop = () => {
   scrollTop.value = document.documentElement.scrollTop
@@ -81,15 +123,6 @@ onMounted(() => {
 onUnmounted(() => {
     window.removeEventListener("scroll", handelScorll);
 });
-
-// 屏幕宽度
-const viewWidth = ref(0)
-viewWidth.value = document.documentElement.clientWidth
-console.log(viewWidth.value, 'viewWidth')
-const adOffsetD = ref(0)
-adOffsetD.value = viewWidth.value/2 - 700 > 0 ? viewWidth.value/2 - 700 : 10
-const adOffsetB = ref(0)
-adOffsetB.value = viewWidth.value/2 - 800 > 0 ? viewWidth.value/2 - 800 : 10
 </script>
 
 <template>
@@ -99,7 +132,7 @@ adOffsetB.value = viewWidth.value/2 - 800 > 0 ? viewWidth.value/2 - 800 : 10
     v-loading="!loadStatus"
     style="height: 100vh"
   ></div>
-  <div v-else v-infinite-scroll="load">
+  <div v-else>
     <!-- 顶部广告 -->
     <AdRow :data="first.a" height="40px" fit="fill"/>
 
@@ -168,18 +201,15 @@ adOffsetB.value = viewWidth.value/2 - 800 > 0 ? viewWidth.value/2 - 800 : 10
 
     <!-- 全网热点 无限滚动 -->
     <div class="m-bt-15">
-      <el-row class="infinite-list m-border-1">
-        <el-col v-for="i in count" :key="i" :span="12">
-          <HotNewsItem />
-        </el-col>
-      </el-row>
+      <div class="infinite-list m-border-1" style="border-bottom: none;">
+        <div v-for="i in count" :key="i" style="border-bottom: 1px solid #f7f7f7;">
+          <Hot3NewsItem />
+        </div>
+      </div>
+      <div class="infinite-tip">
+        ——<span>{{loadTip}}</span>——
+      </div>
     </div>
-
-    <!-- 底部广告 -->
-    <div class="showCopyRight" style="z-index: 1001;">
-      <AdTime :data="first.e" :isBlur="true"/>
-    </div>
-    
 
     <!-- 备案信息 -->
     <div v-if="showCopyRight">
@@ -188,6 +218,11 @@ adOffsetB.value = viewWidth.value/2 - 800 > 0 ? viewWidth.value/2 - 800 : 10
         <CommonFooter :data="fourth"/>
       </div>
     </div>
+
+     <!-- 底部广告 -->
+    <!-- <div class="showCopyRight" style="z-index: 1001;">
+      <AdTime :data="first.e" :isBlur="true"/>
+    </div> -->
 
     <!-- 两边可放大模块 -->
     <div class="ad-d ad-d--l" :style="{top: ((i * 200)) + 'px', left: adOffsetD + 'px'}" v-for="i in 3" :key="i">
@@ -289,25 +324,35 @@ adOffsetB.value = viewWidth.value/2 - 800 > 0 ? viewWidth.value/2 - 800 : 10
 }
 
 .infinite-list {
-    // height: 300px;
-    width: 1180px;
-    padding: 0;
-    margin: 0 auto;
-    list-style: none;
+  // height: 300px;
+  width: 1180px;
+  padding: 0;
+  margin: 0 auto;
+  list-style: none;
 
-    .infinite-list-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 50px;
-      background: var(--el-color-primary-light-9);
-      margin: 10px;
-      color: var(--el-color-primary);
-      & + .list-item {
-        margin-top: 10px;
-      }
+  .infinite-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    background: var(--el-color-primary-light-9);
+    margin: 10px;
+    color: var(--el-color-primary);
+    & + .list-item {
+      margin-top: 10px;
     }
   }
+}
+
+.infinite-tip {
+  text-align: center;
+  font-size: 14px;
+  color: #bcbcbc;
+  margin: 10px 0 0 0;
+  span {
+    padding: 0 20px
+  }
+}
 
 .showCopyRight {
   position: fixed;

@@ -57,12 +57,24 @@ const mousewheelFunc = () => {
   if (wheelTimer) clearTimeout(wheelTimer)
   if (autoScrollTimer) clearTimeout(autoScrollTimer)
   wheelTimer = setTimeout(() => {
+    continueScroll()
+  }, 3000)
+}
+
+// 暂挺滚动
+const pauseScroll = () => {
+  isPuse = true
+  if (wheelTimer) clearTimeout(wheelTimer)
+  if (autoScrollTimer) clearTimeout(autoScrollTimer)
+}
+
+// 继续滚动
+const continueScroll = () => {
     isPuse = false
     // 重置自动滚动的起点
     startAutoScrollLeft = currScrollLeft
     console.log(currScrollLeft, 'currScrollLeft')
     autoScroll()
-  }, 3000)
 }
 </script>
 
@@ -71,10 +83,10 @@ const mousewheelFunc = () => {
     <div class="coupon-tip">
       <span>今日抢券</span>  
     </div>
-    <el-scrollbar ref="scrollbar" @scroll="scrollWidth" @mousewheel="mousewheelFunc">
+    <el-scrollbar ref="scrollbar" @scroll="scrollWidth" @mousewheel="mousewheelFunc" :always="false" wrap-class="hide-scrollbar">
       <div class="flex-content">
         <p v-for="(item, i) in data" :key="i" class="scrollbar-demo-item">
-          <a @click="gotoHref(item.url)">
+          <a @click="gotoHref(item.url)" @mouseenter="pauseScroll" @mouseleave="continueScroll">
             <img :src="item.img" alt="">
           </a>
         </p>
@@ -130,6 +142,11 @@ const mousewheelFunc = () => {
       &:first-child {
         margin-left: 44px;
       }
+    }
+  }
+  .el-scrollbar::v-deep {
+    .is-horizontal {
+      height: 0 !important;
     }
   }
 }
