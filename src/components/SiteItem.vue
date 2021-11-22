@@ -22,7 +22,7 @@ defineProps({
 <style lang="less" scoped>
 .site-item {
   width: 100%;
-  height: 50px;
+  height: 40px;
   font-family: PingFangSC-Regular;
   font-size: 14px;
   color: #333333;

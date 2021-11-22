@@ -44,7 +44,7 @@ const list = computed(() => props.data[0].details.slice(0, 15))
     letter-spacing: 0;
     text-align: center;
     font-weight: 400;
-    line-height: 40px;
+    line-height: 2;
     &-l {
       text-align: right;
     }

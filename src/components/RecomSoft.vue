@@ -41,6 +41,7 @@ const changeTab = (index) => {
 
 <style lang="less" scoped>
 .recom {
+  min-height: 630px;
   &-tabs {
     margin: 8px 0;
     font-family: PingFangSC-Regular;

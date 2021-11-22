@@ -44,7 +44,9 @@ const showWeekWeather = ref(false)
     <!-- <div class="abso-tr"></div> -->
     <div class="container">
       <div class="topbar-bd flex" v-if="head">
-        <img class="logo" :src="data.g.img"/>
+        <a href="">
+          <img class="logo" :src="data.g.img"/>
+        </a>
         <span>
           <a @click="gotoHref(head.area.url)">{{head.area.name}}</a>
         </span>
@@ -63,12 +65,12 @@ const showWeekWeather = ref(false)
           <span style="padding-right: 10px;">{{head.weather[1].temp}}</span>
         </a>
         <div class="flex" @mouseenter="showWeekWeather = true" @mouseleave="showWeekWeather = false">
-          <span style="padding-right: 5px; cursor: pointer;">查看本周天气 > </span>
-          <div class="wrap-weather" v-show="showWeekWeather">
+          <span style="padding-right: 5px; cursor: pointer; line-height: 30px;">查看本周天气 > </span>
+          <div class="wrap-weather" :class="{ 'trans': showWeekWeather }" v-show="showWeekWeather">
             <WeatherCard :data="head.weather"/>
           </div>
         </div>
-        <div class="date">
+        <div class="date" @click="gotoHref(head.calendar.url)">
           <span style="padding-right: 16px">{{head.calendar.date}}</span>
           <span>{{head.calendar.lunar}}</span>
           <span class="splitter">|</span>
@@ -129,8 +131,8 @@ const showWeekWeather = ref(false)
                 </li>
               </ul>
             </div>
-            <div class="dropdown" v-click-outside="onClickOutside">
-              <img class="dropdown-jr" src="@/assets/in@3x.png" alt="" @click="changeVisiStatus">
+            <div class="dropdown" @mouseenter="innerShow" @mouseleave="innerHide">
+              <img class="dropdown-jr" src="@/assets/in@3x.png" alt="" >
               <div class="dropdown-content" :style="{visibility: visiStatus}">
                 <ul>
                   <li class="demonstration flex" v-for="(it, i) in data.j" :key="i">
@@ -190,10 +192,18 @@ const showWeekWeather = ref(false)
     height: 13px;
     object-fit: cover;
   }
+  .trans {
+    opacity: 1 !important;
+  }
   .wrap-weather {
     position: absolute;
     top: 30px; left: 200px;
     z-index: 999;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .trans-opacity {
+    opacity: 1;
   }
   .weather-detail {
     img { 
@@ -205,6 +215,7 @@ const showWeekWeather = ref(false)
   .date {
     position: absolute;
     right: 0;
+    cursor: pointer;
   }
 }
 
@@ -364,16 +375,16 @@ const showWeekWeather = ref(false)
     }
     &-content {
       position: absolute;
-      top: 20px;
+      top: 15px;
       right: 0;
       width: 798px;
       z-index: 10;
       .line {
         width: 1px;
-        height: 84%;
+        height: 92%;
         background: #e2e4e7;
         position: absolute;
-        top: 8%;
+        top: 4%;
       }
 
       .xleft(@n, @i: 1) when (@i =< @n) {

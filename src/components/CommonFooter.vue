@@ -7,13 +7,14 @@
           <!-- 关于本站 -->
           <template v-for="(it, i) in data.u" :key="i">
             <el-tooltip
-              v-if="it.tap"
+              v-if="it.content"
               effect="light"
               class="item"
+              popper-class="popper-class"
               placement="top-start"
             >
               <template #content>
-                <span @click="gotoHref(it.tipUrl)">{{it.tip}}</span>
+                <div style="max-width: 500px;" @click="gotoHref(it.tipUrl)">{{it.content}}</div>
               </template>
               <span @click="gotoHref(it.url)">{{ it.name }}</span>
             </el-tooltip>
@@ -116,6 +117,9 @@ defineProps({
         color: rgba(245, 247, 248, 0.7) !important;
       }
     }
+  }
+  .popper-class {
+    max-width: 500px;
   }
 }
 </style>
