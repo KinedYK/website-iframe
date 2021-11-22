@@ -1,12 +1,15 @@
 <script setup>
-defineProps({
+import {computed} from "vue"
+const props = defineProps({
   data: Object
 })
+
+const list = computed(() => props.data.slice(2))
 </script>
 
 <template>
   <div class="weather flex">
-    <div class="item" v-for="(it, i) in data.splice(2)" :key="i">
+    <div class="item" v-for="(it, i) in list" :key="i">
       <div class="week">{{it.week}}</div>
       <div class="date">{{it.date}}</div>
       <img :src="it.img" alt="">

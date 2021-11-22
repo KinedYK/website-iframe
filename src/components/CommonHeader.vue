@@ -66,8 +66,8 @@ const showWeekWeather = ref(false)
         </a>
         <div class="flex" @mouseenter="showWeekWeather = true" @mouseleave="showWeekWeather = false">
           <span style="padding-right: 5px; cursor: pointer; line-height: 30px;">查看本周天气 > </span>
-          <div class="wrap-weather" :class="{ 'trans': showWeekWeather }" v-show="showWeekWeather">
-            <WeatherCard :data="head.weather"/>
+          <div class="wrap-weather" :class="{ 'trans': showWeekWeather }">
+            <WeatherCard :data="head.weather" v-show="showWeekWeather"/>
           </div>
         </div>
         <div class="date" @click="gotoHref(head.calendar.url)">
@@ -201,6 +201,7 @@ const showWeekWeather = ref(false)
     z-index: 999;
     opacity: 0;
     transition: opacity 0.5s;
+    backdrop-filter: blur(4px);
   }
   .trans-opacity {
     opacity: 1;
