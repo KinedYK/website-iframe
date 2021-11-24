@@ -8,11 +8,11 @@
       <img  src="@/assets/hotv.png" alt="" />
       <span>更多></span>
     </div>
-    <el-scrollbar height="500px">
-        <el-row :gutter="10">
+    <el-scrollbar height="500px" width="500px">
+        <el-row>
           <el-col :span="6" v-for="item in 20" :key="item">
               <el-image
-                style="width: 100%; height: 200px;"
+                style="width: 100%; height: 200px; padding: 0 5px;"
                 :src="'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'"
                 fit="cover"
               ></el-image>
@@ -25,7 +25,7 @@
 <style lang="less" scoped>
   .hot-news {
     // height: 629px;
-    background: #FFFFFF;
+    background: #ffffff;
     border: 1px solid #CFD4DB;
     .title {
       height: 42px;
