@@ -46,8 +46,9 @@ const pro4 = axios.get("/navigation/augment/fourth").then((res) => {
 });
 
 // 今日热点
+let hotPageNum = 1
 const fifth = ref(null);
-const pro5 = axios.get("/navigation/augment/middleUp/1.html").then(res => {
+const pro5 = axios.get(`/navigation/augment/middleUp/${hotPageNum}.html`).then(res => {
   fifth.value = res.data.data
   return res
 })
@@ -62,7 +63,7 @@ const pro6 = axios.get("/navigation/augment/leftUp").then((res) => {
 let pageNum = 1;
 const seventh = ref([]);
 const pro7 = axios.get(`/navigation/augment/middleLow/${pageNum}.html`).then(res => {
-  const list = res.data.data
+  const list = res.data.data.vos
   if (list && list.length > 0) {
       const result = Array.from(Array(Math.ceil(list.length / 3))).map((_, i) => list.slice(i * 3, (i + 1) * 3))
       seventh.value.push(...result)
@@ -120,7 +121,7 @@ const load = () => {
   if (loadPageStatus.value === 'loading') return
   loadPageStatus.value = 'loading'
   axios.get(`/navigation/augment/middleLow/${++pageNum}.html`).then(res => {
-    const list = res.data.data
+    const list = res.data.data.vos
     if (list && list.length > 0) {
       loadPageStatus.value = 'more'
       const result = Array.from(Array(Math.ceil(list.length / 3))).map((_, i) => list.slice(i * 3, (i + 1) * 3))
@@ -143,6 +144,19 @@ const loadTip = computed(() => {
       return '更多';
   }
 })
+
+// 更多今日热点
+const scrollBottom = (e) => {
+  if (hotPageNum == 0) return
+  axios.get(`/navigation/augment/middleUp/${++hotPageNum}.html`).then(res => {
+    console.log(fifth.value.vos)
+    if (res.data.data.vos && res.data.data.vos.length) {
+      fifth.value.vos.push(...res.data.data.vos)
+    } else {
+      hotPageNum = 0
+    }
+  })
+}
 
 // 吸顶
 const scrollTop = ref(0)
@@ -223,7 +237,7 @@ onUnmounted(() => {
 
         <!-- 今日热点 -->
         <div class="m-bt-15">
-          <TodayHotNews :data="fifth"/>
+          <TodayHotNews :data="fifth" @to-bottom="scrollBottom"/>
         </div>
       </div>
     </div>
@@ -259,11 +273,20 @@ onUnmounted(() => {
     </div>
 
     <!-- 两边可放大模块 -->
-    <div class="ad-d ad-d--l" :style="{top: ((i * 200)) + 'px', left: adOffsetD + 'px'}" v-for="i in 3" :key="i">
-      <AdRow v-if="first.d.length > i" :data="first.d[i]" fit="fill"/>
+    <div class="ad-d ad-d--l" :style="{top: ((1 * 200)) + 'px', left: adOffsetD + 25 + 'px'}">
+      <AdRow v-if="first.d.length > 0" :data="first.d[0]" fit="fill"/>
     </div>
-    <div class="ad-d ad-d--r" :style="{top: (100 + (i * 200)) + 'px', right: adOffsetD + 'px'}" v-for="i in 2" :key="i">
-      <AdRow v-if="first.d.length > i+2" :data="first.d[i + 2]" fit="fill"/>
+    <div class="ad-d ad-d--l" :style="{top: ((2 * 200)) + 'px', left: adOffsetD + 'px'}">
+      <AdRow v-if="first.d.length > 1" :data="first.d[1]" fit="fill"/>
+    </div>
+    <div class="ad-d ad-d--l" :style="{top: ((3 * 200)) + 'px', left: adOffsetD + 25 + 'px'}">
+      <AdRow v-if="first.d.length > 2" :data="first.d[2]" fit="fill"/>
+    </div>
+    <div class="ad-d ad-d--r" :style="{top: 100 + ((1 * 200)) + 'px', right: adOffsetD + 'px'}">
+      <AdRow v-if="first.d.length > 3" :data="first.d[3]" fit="fill"/>
+    </div>
+    <div class="ad-d ad-d--r" :style="{top: 100 + ((2 * 200)) + 'px', right: adOffsetD + 25 + 'px'}">
+      <AdRow v-if="first.d.length > 4" :data="first.d[4]" fit="fill"/>
     </div>
 
     <!-- 两边的广告B -->

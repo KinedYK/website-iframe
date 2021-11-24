@@ -73,10 +73,16 @@ const showWeekWeather = ref(false)
         <div class="date">
           <a @click="gotoHref(head.calendar.url)">
             <span style="padding-right: 16px">{{head.calendar.date}}</span>
+          </a>
+           <a @click="gotoHref(head.calendar.url)">
             <span>{{head.calendar.lunar}}</span>
-            <span class="splitter">|</span>
+          </a>
+          <span class="splitter">|</span>
+          <a @click="gotoHref(head.calendar.url)">
             <span class="suit">宜：{{head.calendar.suit}}</span>
-            <span class="splitter">|</span>
+          </a>
+          <span class="splitter">|</span>
+          <a @click="gotoHref(head.calendar.url)">
             <span class="avoid">忌：{{head.calendar.avoid}}</span>
           </a>
         </div>
@@ -190,9 +196,9 @@ const showWeekWeather = ref(false)
   font-weight: 400;
   .logo { 
     margin-right: 12px;
-    width: 50px;
-    height: 13px;
-    object-fit: cover;
+    width: 180px;
+    height: 46px;
+    object-fit: fill;
   }
   .trans {
     opacity: 1 !important;

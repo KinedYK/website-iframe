@@ -4,7 +4,7 @@
       <div class="timedown">{{continueTime}}</div>
       <img src="@/assets/close@3x.png" alt="" @click="close">
       <a @click="gotoHref(data.url)">
-        <el-image style="width: 100%; height: auto;" :src="data.img" fit="contain"/>
+        <el-image style="width: 100%; height: 100%;" :src="data.img" fit="fill"/>
       </a>
     </div>
   </div>
@@ -63,8 +63,8 @@ timerOpen()
     justify-content: center;
     .wrap {
       position: relative;
-      width: 50%;
-      height: 50%;
+      width: 100%;
+      height: 100%;
       img {
         position: absolute;
         top: 0;

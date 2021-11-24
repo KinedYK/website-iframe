@@ -1,22 +1,41 @@
 <script setup>
+import { onMounted, ref } from 'vue'
+
 defineProps({
   data: {
     type: Array,
-    default: []
+    default:[]
   }
+})
+
+const emit = defineEmits(['to-bottom'])
+
+const onScroll = (e) => {
+  console.log(e.scrollTop)
+  if (inner.value.$el.clientHeight - scroll.value.$el.clientHeight <= e.scrollTop) {
+    emit('to-bottom', e)
+  }
+}
+
+const scroll = ref(null)
+const inner = ref(null)
+onMounted(() => {
+  // DOM 元素将在初始渲染后分配给 ref
+  console.log(inner.value.$el.clientHeight)
+  console.log(scroll.value.$el.clientHeight)
 })
 </script>
 
 <template>
   <div class="hot-news">
     <div class="title flex flex-between">
-      <img  src="@/assets/hotnews.png" alt="" />
-      <span>更多></span>
+      <span style="font-size: 20px; font-weight: bold; color: #388aef;">热点资讯</span>
+      <span @click="gotoHref(data.hot)" style="cursor: pointer;">更多></span>
     </div>
-    <el-scrollbar height="978px">
-        <el-row>
-          <el-col :span="12" v-for="(it, i) in data" :key="i">
-            <div class="flex news-card">
+    <el-scrollbar ref="scroll" height="978px" @scroll="onScroll">
+        <el-row ref="inner">
+          <el-col :span="12" v-for="(it, i) in data.vos" :key="i">
+            <div class="flex news-card" @click="gotoHref(it.https_url)">
               <el-image
                 style="width: 158px; height: 94px;"
                 :src="it.pic43"
@@ -24,7 +43,7 @@ defineProps({
               ></el-image>
               <div class="news-card-content">
                 <p class="m-line-2 news-card-title">
-                  <a @click="gotoHref(it.https_url)">{{it.title}}</a> 
+                  <a >{{it.title}}</a> 
                 </p>
                 <p class="news-card-tip m-line-1">
                   <span>{{it.source}}</span>
@@ -41,7 +60,7 @@ defineProps({
 
 <style lang="less" scoped>
   .hot-news {
-    // height: 1023px;
+    // height: 629px;
     background: #FFFFFF;
     border: 1px solid #CFD4DB;
     .title {

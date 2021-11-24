@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-defineProps({
+const props = defineProps({
   dataR: {
     type: Array,
   },
@@ -9,16 +9,14 @@ defineProps({
   },
 })
 
-const a = computed(() => {
-  console.log(dataR)
-})
+const listR = computed(() =>  props.dataR.slice(0, 10))
 const list = ref(["军事","军事","军事","军事","军事","军事事","军事","军事事事","军事","军事","军事","军事",])
 </script>
 
 <template>
   <div class="site">
     <div class="site-title flex">
-      <span v-for="(ir, i) in dataR" :key="i">
+      <span v-for="(ir, i) in listR" :key="i">
         <a @click="gotoHref(ir.url)">{{ir.name}}</a> 
       </span>
     </div>
@@ -64,11 +62,11 @@ const list = ref(["军事","军事","军事","军事","军事","军事事","军�
         letter-spacing: 0;
         line-height: 20px;
         font-weight: 400;
-        margin-right: 20px;
+        margin-right: 30px;
         &::before {
           content: "·";
           position: absolute;
-          left: -14px;
+          left: -18px;
           color: #626972;
         }
       }

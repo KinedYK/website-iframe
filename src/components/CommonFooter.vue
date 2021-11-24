@@ -11,10 +11,10 @@
               effect="dark"
               class="item"
               popper-class="popper-class"
-              placement="top-start"
+              placement="top"
             >
               <template #content>
-                <div style="max-width: 500px;" @click="gotoHref(it.tipUrl)">{{it.content}}</div>
+                <div style="max-width: 150px;" @click="gotoHref(it.tipUrl)">{{it.content}}</div>
               </template>
               <span @click="gotoHref(it.url)">{{ it.name }}</span>
             </el-tooltip>
@@ -115,6 +115,10 @@ defineProps({
       }
       span:hover {
         color: #d5d5d5 !important;
+      }
+      a:hover { 
+        color: #eeeeee !important;
+        text-decoration: none !important;
       }
     }
   }
