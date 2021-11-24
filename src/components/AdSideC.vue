@@ -2,7 +2,7 @@
   <div v-if="show" class="wrap">
     <!-- <img src="@/assets/close@3x.png" alt="" @click="close"> -->
     <CarouselCard ref="carouselCardRef" 
-      :interval="7000" 
+      :interval="3000" 
       :autoplay="true" 
       height="110px" 
       type="" 
@@ -10,7 +10,7 @@
       indicator-position="none"
       @change="changeHandle">
       <CarouselCardItem v-for="(it, i) in data" :key="i" :name="`cc_${i}`">
-        <div class="swiper-item">
+        <div class="swiper-item" @click="gotoHref(it.url)">
           <el-image style="width: 100%; height: 100%;" :src="it.img" alt="" ></el-image>
           <span class="swiper-item--text m-line-1">{{it.name}}</span>
         </div>
