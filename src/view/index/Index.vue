@@ -254,9 +254,9 @@ onUnmounted(() => {
     </div>
 
      <!-- 底部广告 -->
-    <!-- <div class="showCopyRight" style="z-index: 1001;">
+    <div class="showCopyRight" style="z-index: 1001;">
       <AdTime :data="first.e" :isBlur="true"/>
-    </div> -->
+    </div>
 
     <!-- 两边可放大模块 -->
     <div class="ad-d ad-d--l" :style="{top: ((i * 200)) + 'px', left: adOffsetD + 'px'}" v-for="i in 3" :key="i">
@@ -283,7 +283,7 @@ onUnmounted(() => {
     </div>
 
     <!-- 开屏广告F -->
-    <!-- <AdFoot :data="first.f"/> -->
+    <AdFoot :data="first.f"/>
   </div>
   
 </template>
