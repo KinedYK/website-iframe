@@ -31,7 +31,7 @@ const searchText = ref(null)
 
 // 天气
 const head = ref(null)
-axios.get('/navigation/base/head').then(res => {
+axios.get('/navigation/augment/head').then(res => {
   head.value = res.data.data
   console.log(head.value)
 })
@@ -44,8 +44,8 @@ const showWeekWeather = ref(false)
     <!-- <div class="abso-tr"></div> -->
     <div class="container">
       <div class="topbar-bd flex" v-if="head">
-        <a href="">
-          <img class="logo" :src="data.g.img"/>
+        <a @click="gotoHref(head.logo.url)">
+          <img class="logo" :src="head.logo.logo"/>
         </a>
         <span>
           <a @click="gotoHref(head.area.url)">{{head.area.name}}</a>
@@ -70,13 +70,15 @@ const showWeekWeather = ref(false)
             <WeatherCard :data="head.weather" v-show="showWeekWeather"/>
           </div>
         </div>
-        <div class="date" @click="gotoHref(head.calendar.url)">
-          <span style="padding-right: 16px">{{head.calendar.date}}</span>
-          <span>{{head.calendar.lunar}}</span>
-          <span class="splitter">|</span>
-          <span class="suit">宜：{{head.calendar.suit}}</span>
-          <span class="splitter">|</span>
-          <span class="avoid">忌：{{head.calendar.avoid}}</span>
+        <div class="date">
+          <a @click="gotoHref(head.calendar.url)">
+            <span style="padding-right: 16px">{{head.calendar.date}}</span>
+            <span>{{head.calendar.lunar}}</span>
+            <span class="splitter">|</span>
+            <span class="suit">宜：{{head.calendar.suit}}</span>
+            <span class="splitter">|</span>
+            <span class="avoid">忌：{{head.calendar.avoid}}</span>
+          </a>
         </div>
       </div>
       <!-- 搜索 -->
@@ -200,7 +202,7 @@ const showWeekWeather = ref(false)
     top: 30px; left: 200px;
     z-index: 999;
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 1s;
     backdrop-filter: blur(4px);
   }
   .trans-opacity {

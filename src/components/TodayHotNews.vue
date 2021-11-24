@@ -1,5 +1,10 @@
 <script setup>
-
+defineProps({
+  data: {
+    type: Array,
+    default: []
+  }
+})
 </script>
 
 <template>
@@ -8,23 +13,23 @@
       <img  src="@/assets/hotnews.png" alt="" />
       <span>更多></span>
     </div>
-    <el-scrollbar height="917px">
+    <el-scrollbar height="978px">
         <el-row>
-          <el-col :span="12" v-for="item in 20" :key="item">
+          <el-col :span="12" v-for="(it, i) in data" :key="i">
             <div class="flex news-card">
               <el-image
                 style="width: 158px; height: 94px;"
-                :src="'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'"
+                :src="it.pic43"
                 fit="cover"
               ></el-image>
               <div class="news-card-content">
                 <p class="m-line-2 news-card-title">
-                  <a href="">这次武则天只能排最后，史上最荒唐排行榜上最荒唐排行榜上最荒唐排行榜</a> 
+                  <a @click="gotoHref(it.https_url)">{{it.title}}</a> 
                 </p>
-                <p class="news-card-tip">
-                  <span>回味餐厅</span>
-                  <span>|</span>
-                  <span>2021.11.04</span>
+                <p class="news-card-tip m-line-1">
+                  <span>{{it.source}}</span>
+                  <span> | </span>
+                  <span>{{it.pushdate}}</span>
                 </p>
               </div>
             </div>
@@ -36,7 +41,7 @@
 
 <style lang="less" scoped>
   .hot-news {
-    // height: 629px;
+    // height: 1023px;
     background: #FFFFFF;
     border: 1px solid #CFD4DB;
     .title {

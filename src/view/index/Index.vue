@@ -45,9 +45,40 @@ const pro4 = axios.get("/navigation/augment/fourth").then((res) => {
   return res
 });
 
+// 今日热点
+const fifth = ref(null);
+const pro5 = axios.get("/navigation/augment/middleUp/1.html").then(res => {
+  fifth.value = res.data.data
+  return res
+})
+
+const sixth = ref(null);
+const pro6 = axios.get("/navigation/augment/leftUp").then((res) => {
+  sixth.value = res.data.data
+  return res
+})
+
+// 关注
+let pageNum = 1;
+const seventh = ref([]);
+const pro7 = axios.get(`/navigation/augment/middleLow/${pageNum}.html`).then(res => {
+  const list = res.data.data
+  if (list && list.length > 0) {
+      const result = Array.from(Array(Math.ceil(list.length / 3))).map((_, i) => list.slice(i * 3, (i + 1) * 3))
+      seventh.value.push(...result)
+  }
+  return res
+})
+
+const eighth = ref(null);
+const pro8 = axios.get("/navigation/augment/leftLow").then((res) => {
+  eighth.value = res.data.data
+  return res
+})
+
 const loadStatus = ref(false)
 const pros = () => {
-  Promise.all([pro1, pro2, pro3, pro4]).then(ress => {
+  Promise.all([pro1, pro2, pro3, pro4, pro5, pro6, pro7, pro8]).then(ress => {
     console.log(ress, '请求完毕')
     loadStatus.value = true
   })
@@ -83,18 +114,21 @@ const handelScorll = (e) => {
 }
 
 // 无限滚动
-const count = ref(10)
 const loadPageStatus = ref('more') // more nomore loading
 const load = () => {
+  if (loadPageStatus.value === 'nomore') return
+  if (loadPageStatus.value === 'loading') return
   loadPageStatus.value = 'loading'
-  if (count.value < 50) {
-    setTimeout(() => {
-      count.value += 10
+  axios.get(`/navigation/augment/middleLow/${++pageNum}.html`).then(res => {
+    const list = res.data.data
+    if (list && list.length > 0) {
       loadPageStatus.value = 'more'
-    }, 1000)
-  } else {
-    loadPageStatus.value = 'nomore'
-  }
+      const result = Array.from(Array(Math.ceil(list.length / 3))).map((_, i) => list.slice(i * 3, (i + 1) * 3))
+      seventh.value.push(...result)
+    } else {
+      loadPageStatus.value = 'nomore'
+    }
+  })
 }
 
 const loadTip = computed(() => {
@@ -173,11 +207,11 @@ onUnmounted(() => {
         </div>
 
         <div class="m-bt-15">
-          <RecomNews/>
+          <RecomNews :data="sixth" :names="['汽车','娱乐','游戏','社会','科技']"/>
         </div>
 
         <div class="m-bt-15">
-          <RecomNews/>
+          <RecomNews :data="eighth" :names="['国内','国际','情感','军事','体育']"/>
         </div>
       </div>
 
@@ -189,7 +223,7 @@ onUnmounted(() => {
 
         <!-- 今日热点 -->
         <div class="m-bt-15">
-          <TodayHotNews/>
+          <TodayHotNews :data="fifth"/>
         </div>
       </div>
     </div>
@@ -202,8 +236,8 @@ onUnmounted(() => {
     <!-- 全网热点 无限滚动 -->
     <div class="m-bt-15">
       <div class="infinite-list m-border-1" style="border-bottom: none;">
-        <div v-for="i in count" :key="i" style="border-bottom: 1px solid #f7f7f7;">
-          <Hot3NewsItem />
+        <div v-for="(it, i) in seventh" :key="i" style="border-bottom: 1px solid #f7f7f7;">
+          <Hot3NewsItem :data="it"/>
         </div>
       </div>
       <div class="infinite-tip">
@@ -220,9 +254,9 @@ onUnmounted(() => {
     </div>
 
      <!-- 底部广告 -->
-    <div class="showCopyRight" style="z-index: 1001;">
+    <!-- <div class="showCopyRight" style="z-index: 1001;">
       <AdTime :data="first.e" :isBlur="true"/>
-    </div>
+    </div> -->
 
     <!-- 两边可放大模块 -->
     <div class="ad-d ad-d--l" :style="{top: ((i * 200)) + 'px', left: adOffsetD + 'px'}" v-for="i in 3" :key="i">
@@ -249,7 +283,7 @@ onUnmounted(() => {
     </div>
 
     <!-- 开屏广告F -->
-    <AdFoot :data="first.f"/>
+    <!-- <AdFoot :data="first.f"/> -->
   </div>
   
 </template>
@@ -287,11 +321,11 @@ onUnmounted(() => {
   max-width: 200px;
   z-index: 1001;
   &--l {
-   top: 100px;
+   top: 200px;
    left: 10px;
   }
   &--r {
-    top: 100px;
+    top: 200px;
     right: 10px;
   }
 }

@@ -8,7 +8,7 @@
           <template v-for="(it, i) in data.u" :key="i">
             <el-tooltip
               v-if="it.content"
-              effect="light"
+              effect="dark"
               class="item"
               popper-class="popper-class"
               placement="top-start"
@@ -114,7 +114,7 @@ defineProps({
         cursor: pointer;
       }
       span:hover {
-        color: rgba(245, 247, 248, 0.7) !important;
+        color: #d5d5d5 !important;
       }
     }
   }
